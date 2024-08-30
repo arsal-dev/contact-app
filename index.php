@@ -11,6 +11,32 @@ if (isset($_POST['submit'])) {
     $subject = $_POST['subject'];
     $message = $_POST['message'];
 
+    $fileName = $_FILES['image']['full_path'];
+    $fileSize = $_FILES['image']['size'];
+    $filePath = $_FILES['image']['tmp_name'];
+    $fileActualName = $_FILES['image']['name'];
+
+    $fileActualName = explode('.', $fileActualName)[0];
+
+    $fileExtention = pathinfo($fileName, PATHINFO_EXTENSION);
+
+    $newFileName = uniqid() . '.' . $fileActualName . '.' . $fileExtention;
+
+    $allowdExtenstions = ['png', 'jpg', 'jpeg', 'webp', 'svg', 'gif'];
+    $image_bool = true;
+
+    if (!in_array($fileExtention, $allowdExtenstions)) {
+        $errors['fileError'] = 'This file is not Supported please upload png, jpg, jpeg, webp, svg or gif';
+        $image_bool = true;
+    } else {
+        $image_bool = false;
+    }
+    if ($fileSize > 5000000) {
+        $errors['fileError'] = 'Image size cannot be grater then 5 MB';
+        $image_bool = true;
+    } else {
+        $image_bool = false;
+    }
     if (empty($name)) {
         $errors['name'] = 'Please Enter Your Name';
         $checkError = true;
@@ -36,9 +62,11 @@ if (isset($_POST['submit'])) {
         $checkError = false;
     }
 
-    if ($checkError == false) {
+    if ($checkError == false && $image_bool == false) {
 
-        $sql = "INSERT INTO `contact`(`name`, `email`, `subject`, `message`) VALUES ('$name','$email','$subject','$message')";
+        move_uploaded_file($filePath, "uploads/$newFileName");
+
+        $sql = "INSERT INTO `contact`(`name`, `email`, `subject`, `message`, `image`) VALUES ('$name','$email','$subject','$message', '$newFileName')";
 
         if ($conn->query($sql)) {
             $checkError = false;
@@ -65,13 +93,13 @@ if (isset($_POST['submit'])) {
     <?php endif ?>
 
     <?php
-    if ($checkError == false) {
+    if ($checkError == false && $image_bool == false) {
         echo "<div class='alert alert-success' role='alert'>We have Recived Your Message and we'll get back to you shortly</div>";
     }
     ?>
 
     <h3>Contact Us</h3>
-    <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
+    <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" enctype="multipart/form-data">
         <div class="row">
             <div class="col-lg-6 col-sm-12">
                 <label for="name">Name</label>
@@ -81,6 +109,10 @@ if (isset($_POST['submit'])) {
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" class="form-control" placeholder="Enter Your Email" value="<?php echo $email ?? "" ?>">
             </div>
+        </div>
+        <div>
+            <label for="image">Image</label>
+            <input type="file" id="image" name="image" class="form-control">
         </div>
         <div>
             <label for="subject">Subject</label>

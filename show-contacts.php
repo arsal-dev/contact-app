@@ -21,6 +21,7 @@ $result = $conn->query($sql);
                 <th scope="col">Email</th>
                 <th scope="col">Subject</th>
                 <th scope="col">Message</th>
+                <th scope="col">Image</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
@@ -31,7 +32,8 @@ $result = $conn->query($sql);
                     <td><?php echo $row['email'] ?></td>
                     <td><?php echo $row['subject'] ?></td>
                     <td><?php echo $row['message'] ?></td>
-                    <td><a href="edit.php?id=<?php echo $row['id'] ?>" class="btn btn-primary">EDIT</a> <a href="delete.php?id=<?php echo $row['id'] ?>" class="btn btn-danger">DELETE</a></td>
+                    <td><img src="uploads/<?php echo $row['image'] ?>" class="img_fluid" width="100px"></td>
+                    <td><a href="edit.php?id=<?php echo $row['id'] ?>" class="btn btn-primary">EDIT</a> <a href="delete.php?id=<?php echo $row['id'] ?>&imageName=<?php echo $row['image'] ?>" class="btn btn-danger">DELETE</a></td>
                 </tr>
             <?php endwhile ?>
         </tbody>
