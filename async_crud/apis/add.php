@@ -9,6 +9,8 @@ $data = json_decode($data);
 
 $sql = "INSERT INTO `users`(`name`, `email`) VALUES ('$data->name','$data->email')";
 
-$conn->query($sql);
-
-echo json_encode(['result' => 'success', 'response' => 'data saved into the database']);
+if ($conn->query($sql)) {
+    echo json_encode(['result' => 'success', 'response' => 'data saved into the database']);
+} else {
+    echo json_encode(['result' => 'error', 'response' => 'there was an error adding data to the database']);
+}

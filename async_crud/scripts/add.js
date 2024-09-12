@@ -17,6 +17,6 @@ form.addEventListener('submit', async function (e) {
     res = await res.json();
 
     if (res.result == 'success') {
-        alert(res.response);
+        show();
     }
 });

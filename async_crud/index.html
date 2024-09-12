@@ -24,9 +24,47 @@
             </div>
             <input type="submit" class="btn btn-primary mt-3">
         </form>
+
+        <table class="table mt-5">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- <tr>
+                    <td><img src="./loading.gif" width="250px"></td>
+                </tr> -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- delete Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Delete?</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are You Sure You Want To Delete?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">NO!</button>
+                    <button type="button" class="btn btn-danger dlt_modal_btn" onclick="actualDelete(this)"
+                        data-bs-dismiss="modal">YES!</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="./scripts/add.js"></script>
+    <script src="./scripts/read.js"></script>
 </body>
 
 </html>
