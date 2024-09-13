@@ -13,7 +13,7 @@
 
     <div class="container mt-5">
         <h3>Add Form</h3>
-        <form>
+        <form id="addForm">
             <div>
                 <label for="name">Name</label>
                 <input type="text" id="name" placeholder="Enter Your Name" class="form-control">
@@ -63,8 +63,38 @@
         </div>
     </div>
 
+    <!-- edit Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edit</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editForm">
+                        <input type="hidden" id="edit_id">
+                        <div>
+                            <label for="nameEdit">Name</label>
+                            <input type="text" id="nameEdit" class="form-control" placeholder="enter name">
+                        </div>
+                        <div>
+                            <label for="emailEdit">Email</label>
+                            <input type="email" id="emailEdit" class="form-control" placeholder="enter email">
+                        </div>
+                        <input type="submit" value="update" class="btn btn-primary mt-2" data-bs-dismiss="modal">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="./scripts/add.js"></script>
     <script src="./scripts/read.js"></script>
+    <script src="./scripts/update.js"></script>
 </body>
 
 </html>

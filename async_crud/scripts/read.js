@@ -22,6 +22,9 @@ async function show() {
         edit_btn.innerText = 'edit';
         edit_btn.classList.add('btn');
         edit_btn.classList.add('btn-primary');
+        edit_btn.setAttribute('data-bs-toggle', 'modal');
+        edit_btn.setAttribute('data-bs-target', '#editModal');
+        edit_btn.setAttribute('onclick', 'editData(this)');
         edit_td.append(edit_btn);
 
         let delete_td = document.createElement('td');
@@ -58,6 +61,16 @@ async function actualDelete(elemt) {
     if (res.result == 'success') {
         show();
     }
+}
+
+function editData(element) {
+    let id = element.parentElement.previousSibling.previousSibling.previousSibling.innerText;
+    let name = element.parentElement.previousSibling.previousSibling.innerText;
+    let email = element.parentElement.previousSibling.innerText;
+
+    document.querySelector('#edit_id').value = id;
+    document.querySelector('#nameEdit').value = name;
+    document.querySelector('#emailEdit').value = email;
 }
 
 // function createNewElement(element, innertext, classs) {
