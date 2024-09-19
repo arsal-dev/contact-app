@@ -13,7 +13,6 @@ class myClass
 $MyCls = new myClass;
 
 // $MyCls->a = 20;
-
 // echo $MyCls->a;
 
 echo $MyCls->myFunc();
