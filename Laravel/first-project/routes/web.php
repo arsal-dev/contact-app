@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -12,6 +13,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'home']);
 Route::get('/contact', [HomeController::class, 'contact']);
 Route::resource('/dashboard', DashboardController::class);
+
+
+Route::get('/posts', [PostController::class, 'show']);
+Route::get('/posts/create', [PostController::class, 'create']);
+Route::get('/posts/update', [PostController::class, 'update']);
+Route::get('/posts/delete', [PostController::class, 'delete']);
 
 // Route::get('/home', function () {
 //     return '<h1>Home Page!</h1>';
