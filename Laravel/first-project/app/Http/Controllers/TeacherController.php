@@ -9,7 +9,8 @@ class TeacherController extends Controller
 {
     public function create()
     {
-        return view('teachers.create');
+        $teachers = Teacher::all();
+        return view('teachers.create', ['teachers' => $teachers]);
     }
 
     public function upload(Request $request)
@@ -24,5 +25,31 @@ class TeacherController extends Controller
         Teacher::create($validated_data);
 
         return redirect('/teacher/create')->with('message', 'data added to the database');
+    }
+
+    public function destroy($id)
+    {
+        Teacher::destroy($id);
+        return redirect()->back()->with('message', 'data deleted from the database');
+    }
+
+    public function edit($id)
+    {
+        $teacher = Teacher::find($id);
+        return view('teachers.edit', ['teacher' => $teacher]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validated_data = $request->validate([
+            'name' => 'required',
+            'email' => "required|email|unique:teachers,email,$id",
+            'address' => 'required',
+            'phone' => 'required|max_digits:11',
+        ]);
+
+        Teacher::find($id)->update($validated_data);
+
+        return redirect('/teacher/create')->with('message', 'data updated successfully');
     }
 }

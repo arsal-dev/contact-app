@@ -25,6 +25,9 @@ Route::get('/posts/delete', [PostController::class, 'delete']);
 
 Route::get('/teacher/create', [TeacherController::class, 'create'])->name('create.form');
 Route::post('/teacher/create', [TeacherController::class, 'upload'])->name('create.upload');
+Route::delete('/teachers/delete/{id}', [TeacherController::class, 'destroy'])->name('teacher.delete');
+Route::get('/teachers/edit/{id}', [TeacherController::class, 'edit'])->name('teacher.edit');
+Route::put('teachers/update/{id}', [TeacherController::class, 'update'])->name('teacher.update');
 
 // Route::get('/home', function () {
 //     return '<h1>Home Page!</h1>';
