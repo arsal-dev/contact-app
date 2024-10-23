@@ -28,3 +28,4 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::get('/', [homeController::class, 'home'])->name('home');
+Route::get('/post/{title}', [homeController::class, 'view_post'])->name('view.post');

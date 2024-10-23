@@ -18,9 +18,9 @@
                                 <th>thumbnail</th>
                                 <th>title</th>
                                 <th>excerpt</th>
-                                <th>body</th>
                                 <th>category</th>
                                 <th>user</th>
+                                <th>action</th>
                             </tr>
                         </thead>
                         <tfoot>
@@ -28,19 +28,24 @@
                                 <th>thumbnail</th>
                                 <th>title</th>
                                 <th>excerpt</th>
-                                <th>body</th>
                                 <th>category</th>
                                 <th>user</th>
+                                <th>action</th>
                             </tr>
                         </tfoot>
                         <tbody>
-                            <tr>
-                                <td>asdas</td>
-                                <td>asdasd</td>
-                                <td>asdasd</td>
-                                <td>asdasd</td>
-                                <td>asdasd</td>
-                            </tr>
+                            @foreach ($blogs as $blog)
+                                <tr>
+                                    <td><img src="{{ asset("assets/thumbnails/$blog->thumbnail") }}" width="100px"
+                                            alt=""></td>
+                                    <td>{{ $blog->title }}</td>
+                                    <td>{{ $blog->excerpt }}</td>
+                                    <td>{{ $blog->Category->title }}</td>
+                                    <td>{{ $blog->User->name }}</td>
+                                    <td><button class="btn btn-primary">Edit</button> <button
+                                            class="btn btn-danger">Delete</button></td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

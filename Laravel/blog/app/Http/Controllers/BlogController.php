@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Blog;
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -48,7 +49,7 @@ class BlogController extends Controller
 
     public function view()
     {
-        dd(Blog::all());
-        return view('dashboard.blogs.view');
+        $blogs = Blog::with(['Category', 'User'])->get();
+        return view('dashboard.blogs.view', ['blogs' => $blogs]);
     }
 }
