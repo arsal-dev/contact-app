@@ -49,7 +49,36 @@ class BlogController extends Controller
 
     public function view()
     {
-        $blogs = Blog::with(['Category', 'User'])->get();
+        $user_id = Auth::id();
+        $blogs = Blog::with(['Category', 'User'])->where('user_id', '=', $user_id)->get();
         return view('dashboard.blogs.view', ['blogs' => $blogs]);
+    }
+
+    public function delete($id)
+    {
+        Blog::destroy($id);
+        return redirect()->back()->with('message', 'blog deleted successfully');
+    }
+
+    public function trash()
+    {
+        $blogs = Blog::onlyTrashed()->with(['Category', 'User'])->get();
+        return view('dashboard.blogs.trash', ['blogs' => $blogs]);
+    }
+
+    public function restore($id)
+    {
+        $blog = Blog::onlyTrashed()->find($id);
+        $blog->restore();
+        return redirect()->back()->with('message', 'blog restored successfully');
+    }
+
+    public function delete_forever($id)
+    {
+        $blog = Blog::onlyTrashed()->find($id);
+        unlink(public_path("/assets/thumbnails/$blog->thumbnail"));
+        $blog->forceDelete();
+
+        return redirect()->back()->with('message', 'blog deleted successfully');
     }
 }

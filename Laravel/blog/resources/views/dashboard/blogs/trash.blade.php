@@ -1,8 +1,7 @@
 @extends('dashboard.layouts')
 
 @section('content')
-    <h3>view blogs</h3>
-    <a href="{{ route('trash.blog') }}" class="btn btn-danger" style="float: right">View Trash</a>
+    <h3>deleted blogs</h3>
     <div class="container">
         <div class="card p-5">
             @if (session()->has('message'))
@@ -43,11 +42,12 @@
                                     <td>{{ $blog->excerpt }}</td>
                                     <td>{{ $blog->Category->title }}</td>
                                     <td>{{ $blog->User->name }}</td>
-                                    <td><button class="btn btn-primary">Edit</button>
-                                        <form action="{{ route('delete.blog', $blog->id) }}" method="POST">
+                                    <td><a href="{{ route('restore.blog', $blog->id) }}" class="btn btn-primary">Restore</a>
+                                        <form action="{{ route('delete.blog.forever', $blog->id) }}" method="POST">
                                             @csrf
                                             @method('delete')
-                                            <input type="submit" name="submit" value="delete" class="btn btn-danger">
+                                            <input type="submit" name="submit" value="delete forever"
+                                                class="btn btn-danger">
                                         </form>
                                     </td>
                                 </tr>

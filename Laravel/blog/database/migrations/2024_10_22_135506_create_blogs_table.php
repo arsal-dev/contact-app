@@ -16,10 +16,11 @@ return new class extends Migration
             $table->string('thumbnail');
             $table->string('title')->unique();
             $table->string('excerpt');
-            $table->string('body');
+            $table->longText('body');
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
