@@ -49,6 +49,7 @@ class BlogController extends Controller
 
     public function view()
     {
+        // dd(Auth()->user()->role);
         $user_id = Auth::id();
         $blogs = Blog::with(['Category', 'User'])->where('user_id', '=', $user_id)->get();
         return view('dashboard.blogs.view', ['blogs' => $blogs]);
@@ -80,5 +81,54 @@ class BlogController extends Controller
         $blog->forceDelete();
 
         return redirect()->back()->with('message', 'blog deleted successfully');
+    }
+
+    public function pending()
+    {
+        if (Auth()->user()->role == 'writer') {
+            return redirect()->route('dashboard')->with('message', 'unauthorized access');
+        }
+
+        $blogs = Blog::with(['Category', 'User'])
+            ->where('status', '=', 'pending')
+            ->get();
+
+        return view('dashboard.blogs.pending', ['blogs' => $blogs]);
+    }
+
+    public function approve_blog($id)
+    {
+        Blog::where('id', $id)->update([
+            'status' => 'approved'
+        ]);
+        return redirect()->back()->with('message', 'blog approved successfully');
+    }
+
+    public function reject(Request $request)
+    {
+        $id = $request->input()['id'];
+        $reason = $request->input()['reason'];
+        Blog::where('id', $id)->update([
+            'status' => 'rejected',
+            'reason' => $reason
+        ]);
+
+        return redirect()->back()->with('message', 'blog was rejected');
+    }
+
+    public function get_reason($id)
+    {
+        $blog = Blog::select(['id', 'reason', 'status', 'body'])->find($id);
+
+        return $blog;
+    }
+
+    public function review($id)
+    {
+        Blog::where('id', $id)->update([
+            'status' => 'pending'
+        ]);
+
+        return redirect()->back()->with('message', 'blog was sent for a review');
     }
 }

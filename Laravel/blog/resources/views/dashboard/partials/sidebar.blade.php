@@ -86,6 +86,14 @@
             <span>view blog</span></a>
     </li>
 
+    @if (Auth::user()->role == 'admin')
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('pending') }}">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>pending blogs</span></a>
+        </li>
+    @endif
+
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>

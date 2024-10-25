@@ -10,7 +10,7 @@ class homeController extends Controller
 {
     public function home()
     {
-        $blogs = Blog::with(['Category', 'User'])->paginate(2);
+        $blogs = Blog::with(['Category', 'User'])->where('status', '=', 'approved')->paginate(2);
         return view('welcome', ['blogs' => $blogs]);
     }
 

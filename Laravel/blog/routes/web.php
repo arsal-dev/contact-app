@@ -33,7 +33,17 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/delete-blog-forever/{id}', [BlogController::class, 'delete_forever'])->name('delete.blog.forever');
 });
 
+
+Route::group(['middleware' => 'role:admin'], function () {
+    Route::get('pending', [BlogController::class, 'pending'])->name('pending');
+    Route::get('approve_blog/{id}', [BlogController::class, 'approve_blog'])->name('approve.blog');
+    Route::post('reject', [BlogController::class, 'reject'])->name('blog.reject');
+});
+
+
 Route::get('/post/{title}', [homeController::class, 'view_post'])->name('view.post');
 Route::post('/search', [homeController::class, 'search'])->name('search');
 Route::get('/writers', [homeController::class, 'writers'])->name('writers');
 Route::get('/user-blogs/{name}', [homeController::class, 'user_blogs'])->name('user.blogs');
+Route::get('fetch-blog/{id}', [BlogController::class, 'get_reason'])->name('blog.reason');
+Route::get('submit-review/{id}', [BlogController::class, 'review'])->name('review');
